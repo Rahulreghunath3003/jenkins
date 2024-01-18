@@ -21,23 +21,12 @@ jobs:
           aws configure set default.region your-aws-region
 
           # Start EC2 instance (replace your-instance-id-here)
-          aws ec2 start-instances --instance-ids your-instance-id-here
+          aws ec2 start-instances --instance-ids i-0e5a26d8ec20b8d48
 
   run-job:
     needs: start-aws-instance
     runs-on: ubuntu-latest
 
-    steps:
-      - name: Run Your Job
-        run: |
-          # Add your job execution steps here
 
-  stop-aws-instance:
-    needs: run-job
-    runs-on: ubuntu-latest
 
-    steps:
-      - name: Stop AWS EC2 Instance
-        run: |
-          # Stop EC2 instance (replace your-instance-id-here)
-          aws ec2 stop-instances --instance-ids your-instance-id-here
+ 
