@@ -18,14 +18,12 @@ jobs:
           # Set up AWS CLI
           aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws configure set default.region your-aws-region
+          aws configure set default.region 	eu-west-1
 
           # Start EC2 instance (replace your-instance-id-here)
           aws ec2 start-instances --instance-ids i-0e5a26d8ec20b8d48
 
-  run-job:
-    needs: start-aws-instance
-    runs-on: ubuntu-latest
+  
 
 
 
