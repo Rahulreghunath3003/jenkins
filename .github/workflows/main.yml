@@ -1,0 +1,43 @@
+name: AWS EC2 Workflow
+
+on:
+  push:
+    branches:
+      - main # Adjust the branch name as needed
+
+jobs:
+  start-aws-instance:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Start AWS EC2 Instance
+        run: |
+          # Set up AWS CLI
+          aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws configure set default.region your-aws-region
+
+          # Start EC2 instance (replace your-instance-id-here)
+          aws ec2 start-instances --instance-ids your-instance-id-here
+
+  run-job:
+    needs: start-aws-instance
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Run Your Job
+        run: |
+          # Add your job execution steps here
+
+  stop-aws-instance:
+    needs: run-job
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Stop AWS EC2 Instance
+        run: |
+          # Stop EC2 instance (replace your-instance-id-here)
+          aws ec2 stop-instances --instance-ids your-instance-id-here
